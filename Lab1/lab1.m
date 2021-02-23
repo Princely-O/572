@@ -57,7 +57,7 @@ x = 0 : 20;
 m = -1;
 b = 20;
 y = m*x + b;
-plot(x,y)
+plot(x,y, 'm')
 % GED (MICD)
 x = 0 : 15;
 m = -3/10;
@@ -66,6 +66,12 @@ y = m*x + b;
 plot(x,y);
 plot([5 10], [10 15], 'k');
 plot(15/2,25/2,'k*')  % midpoint between classes
+%MAP Decision Boundary Equation
+x = 0 : 20;
+m = -0.5;
+b = 65/4;
+y = m*x + b;
+plot(x,y, 'g')
 
 % unit standard deviation contours
 % class A
@@ -105,7 +111,7 @@ axis equal
 hold off
 xlabel('x1') 
 ylabel('x2')
-legend('Class A','Class B', 'Class A prototype','Class B prototype', 'MED boundary', 'GED boundary', 'Class distance', 'Midpoint', 'Class A contour', 'Class B contour')
+legend('Class A','Class B', 'Class A prototype','Class B prototype', 'MED boundary', 'GED boundary', 'Class distance', 'Midpoint', 'MAP boundary','Class A contour', 'Class B contour')
 
 
 % y = Gauss2d(x1, x2, mu, sigma)
