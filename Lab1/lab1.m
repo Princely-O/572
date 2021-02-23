@@ -113,5 +113,34 @@ xlabel('x1')
 ylabel('x2')
 legend('Class A','Class B', 'Class A prototype','Class B prototype', 'MED boundary', 'GED boundary', 'Class distance', 'Midpoint', 'MAP boundary','Class A contour', 'Class B contour')
 
+% NN
+figure(2);
+scatter(z_A(:,1),z_A(:,2),'o')
+title('Case 1 NN KNN')
+hold on
+scatter(z_B(:,1),z_B(:,2),'x')
+
+% unit standard deviation contours
+% class A
+t = linspace(0,2 * pi,1000);
+theta0 = atan2(-4,-4);
+a=sqrt(4);
+b=sqrt(8);
+x = 5 + a * sin(t+theta0);
+y = 10 + b * cos(t);
+plot(x,y, 'b')
+
+% class B
+t = linspace(0,2 * pi,1000);
+theta0 = atan2(-4,-4);
+a=sqrt(4);
+b=sqrt(8);
+x = 10 + a * sin(t+theta0);
+y = 15 + b * cos(t);
+plot(x,y, 'r')
+axis equal
+ 
+hold off
+
 
 % y = Gauss2d(x1, x2, mu, sigma)
