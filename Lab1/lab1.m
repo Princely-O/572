@@ -46,7 +46,6 @@ prototype_B = mu_B;
 % xunit = 1 * cos(th) + (5*sqrt(2))/4;
 % yunit = 1 * sin(th) + 5;
 
-
 % plot
 scatter(z_A(:,1),z_A(:,2),'o')
 title('Case 1 MED GED MAP')
@@ -59,6 +58,14 @@ m = -1;
 b = 20;
 y = m*x + b;
 plot(x,y)
+% GED (MICD)
+x = 0 : 15;
+m = -3/10;
+b = 14.75;
+y = m*x + b;
+plot(x,y);
+plot([5 10], [10 15], 'k');
+plot(15/2,25/2,'k*')  % midpoint between classes
 
 % unit standard deviation contours
 % class A
@@ -68,7 +75,7 @@ a=sqrt(4);
 b=sqrt(8);
 x = 5 + a * sin(t+theta0);
 y = 10 + b * cos(t);
-plot(x,y)
+plot(x,y, 'b')
 
 % class B
 t = linspace(0,2 * pi,1000);
@@ -77,8 +84,10 @@ a=sqrt(4);
 b=sqrt(8);
 x = 10 + a * sin(t+theta0);
 y = 15 + b * cos(t);
-plot(x,y)
+plot(x,y, 'r')
 axis equal
+
+
 
 % t = linspace(0,2 * pi,1000);
 % theta0 = atan2(y2,y1);
@@ -96,7 +105,7 @@ axis equal
 hold off
 xlabel('x1') 
 ylabel('x2')
-legend('Class A','Class B', 'Class A prototype','Class B prototype', 'MED')
+legend('Class A','Class B', 'Class A prototype','Class B prototype', 'MED boundary', 'GED boundary', 'Class distance', 'Midpoint', 'Class A contour', 'Class B contour')
 
 
 % y = Gauss2d(x1, x2, mu, sigma)
