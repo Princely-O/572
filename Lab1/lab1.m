@@ -94,7 +94,6 @@ plot(x,y, 'r')
 axis equal
 
 
-
 % t = linspace(0,2 * pi,1000);
 % theta0 = atan2(y2,y1);
 % a=sqrt(lambda_1);
@@ -115,32 +114,42 @@ legend('Class A','Class B', 'Class A prototype','Class B prototype', 'MED bounda
 
 % NN
 figure(2);
-scatter(z_A(:,1),z_A(:,2),'o')
-title('Case 1 NN KNN')
+w = [0.4; 0.6];
+chiSqrDist = @(z_A,mu_A)sqrt((bsxfun(@minus,z_A,mu_A).^2)*w);
+[Idx,D] = knnsearch(z_A,z_A,'Distance',chiSqrDist,'k',1);
+for j = 1:1;
+    h(3) = plot(z_A(Idx(:,j),1),z_A(Idx(:,j),2),'bo','MarkerSize',10);
+end
 hold on
-scatter(z_B(:,1),z_B(:,2),'x')
+w = [0.4; 0.6];
+chiSqrDist = @(z_B,mu_B)sqrt((bsxfun(@minus,z_B,mu_B).^2)*w);
+[Idx,D] = knnsearch(z_B,z_B,'Distance',chiSqrDist,'k',1);
+for j = 1:1;
+    h(3) = plot(z_B(Idx(:,j),1),z_B(Idx(:,j),2),'ro','MarkerSize',10);
+end
+title('NN');
+xlabel 'x1';
+ylabel 'x2';
+legend('Class A Nearest Neighbours','Class B Nearest Neighbours');
 
-% unit standard deviation contours
-% class A
-t = linspace(0,2 * pi,1000);
-theta0 = atan2(-4,-4);
-a=sqrt(4);
-b=sqrt(8);
-x = 5 + a * sin(t+theta0);
-y = 10 + b * cos(t);
-plot(x,y, 'b')
 
-% class B
-t = linspace(0,2 * pi,1000);
-theta0 = atan2(-4,-4);
-a=sqrt(4);
-b=sqrt(8);
-x = 10 + a * sin(t+theta0);
-y = 15 + b * cos(t);
-plot(x,y, 'r')
-axis equal
- 
-hold off
+%KNN
+knn_X = cat(1, z_A, z_B);
+
+rng(1); % For reproducibility
+[idx,C] = kmeans(knn_X,5);
+
+figure(3);
+gscatter(knn_X(:,1),knn_X(:,2),idx)
+hold on
+plot(C(:,1),C(:,2),'kx', 'MarkerSize',15,'LineWidth',3)
+title 'KNN';
+xlabel 'x1'; 
+ylabel 'x2';
+legend('Centroid A','Centroid B','Centroid C','Centroid D','Centroid E');
+hold off;
+
+
 
 
 % y = Gauss2d(x1, x2, mu, sigma)
