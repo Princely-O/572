@@ -159,16 +159,11 @@ sigma_Ctr = whiten(sigma_C, 0.7)
 sigma_Dtr = whiten(sigma_D, 0.7)
 sigma_Etr = whiten(sigma_E, 0.7)
 
-C = nearestSPD(sigma_Ctr);
-R_C = chol(C);
+R_C = chol(sigma_Ctr, 'lower');
 z_C = repmat(mu_C,N_C,1) + randn(N_C,2)*R_C
-
-D = nearestSPD(sigma_Dtr);
-R_D = chol(sigma_Dtr);
+R_D = chol(nearestSPD(sigma_Dtr));
 z_D = repmat(mu_D,N_D,1) + randn(N_D,2)*R_D
-
-E = nearestSPD(sigma_Etr);
-R_E = chol(sigma_Etr);
+R_E = chol(sigma_Etr, 'lower');
 z_E = repmat(mu_E,N_E,1) + randn(N_E,2)*R_E
 
 % classifiers
@@ -179,7 +174,7 @@ prototype_E = mu_E;
 % plot
 figure(4)
 scatter(z_C(:,1),z_C(:,2),'o')
-title('Case 1 MED GED MAP')
+title('Case 2 MED GED MAP')
 hold on
 scatter(z_D(:,1),z_D(:,2),'x')
 hold on
@@ -187,6 +182,35 @@ scatter(z_E(:,1),z_E(:,2),'x')
 scatter(prototype_C(:,1),prototype_C(:,2),'d', 'filled');
 scatter(prototype_D(:,1),prototype_D(:,2),'s', 'filled');
 scatter(prototype_E(:,1),prototype_E(:,2),'s', 'filled');
+% unit standard deviation contours
+% class C
+% t = linspace(0,2 * pi,1000);
+% theta0 = atan2(-4,-4);
+% a=sqrt(4);
+% b=sqrt(8);
+% x = 5 + a * sin(t+theta0);
+% y = 10 + b * cos(t);
+% plot(x,y, 'b')
+% 
+% % class D
+% t = linspace(0,2 * pi,1000);
+% theta0 = atan2(-4,-4);
+% a=sqrt(4);
+% b=sqrt(8);
+% x = 10 + a * sin(t+theta0);
+% y = 15 + b * cos(t);
+% plot(x,y, 'r')
+% axis equal
+% 
+% % class E
+% t = linspace(0,2 * pi,1000);
+% theta0 = atan2(-4,-4);
+% a=sqrt(4);
+% b=sqrt(8);
+% x = 5 + a * sin(t+theta0);
+% y = 10 + b * cos(t);
+% plot(x,y, 'b')
+
 x_1 = 0 : 20;
 m_1 = 0;
 b_1 = 10;
@@ -205,4 +229,6 @@ plot(x_1,y_1, 'm')
 plot(x_2,y_2, 'm')
 plot(x_3,y_3, 'm')
 
+
+% end of Case 2-----------------------------------------------------------
 % y = Gauss2d(x1, x2, mu, sigma)
