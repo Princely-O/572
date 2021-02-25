@@ -48,30 +48,30 @@ prototype_B = mu_B;
 
 % plot
 scatter(z_A(:,1),z_A(:,2),'o')
-title('Case 1 MED GED MAP')
+title('Case 1 clusters')
 hold on
 scatter(z_B(:,1),z_B(:,2),'x')
 scatter(prototype_A(:,1),prototype_A(:,2),'d', 'filled');
 scatter(prototype_B(:,1),prototype_B(:,2),'s', 'filled');
-x = 0 : 20;
-m = -1;
-b = 20;
-y = m*x + b;
-plot(x,y, 'm')
-% GED (MICD)
-x = 0 : 15;
-m = -3/10;
-b = 14.75;
-y = m*x + b;
-plot(x,y);
-plot([5 10], [10 15], 'k');
-plot(15/2,25/2,'k*')  % midpoint between classes
-%MAP Decision Boundary Equation
-x = 0 : 20;
-m = -0.5;
-b = 65/4;
-y = m*x + b;
-plot(x,y, 'g')
+% x = 0 : 20;
+% m = -1;
+% b = 20;
+% y = m*x + b;
+% plot(x,y, 'm')
+% % GED (MICD)
+% x = 0 : 15;
+% m = -3/10;
+% b = 14.75;
+% y = m*x + b;
+% plot(x,y);
+% plot([5 10], [10 15], 'k');
+% plot(15/2,25/2,'k*')  % midpoint between classes
+% %MAP Decision Boundary Equation
+% x = 0 : 20;
+% m = -0.5;
+% b = 65/4;
+% y = m*x + b;
+% plot(x,y, 'g')
 
 % unit standard deviation contours
 % class A
@@ -110,7 +110,7 @@ axis equal
 hold off
 xlabel('x1') 
 ylabel('x2')
-legend('Class A','Class B', 'Class A prototype','Class B prototype', 'MED boundary', 'GED boundary', 'Class distance', 'Midpoint', 'MAP boundary','Class A contour', 'Class B contour')
+legend('Class A','Class B', 'Class A mea','Class B mean','Class A contour', 'Class B contour')
 
 % NN
 figure(2);
@@ -159,15 +159,14 @@ sigma_Ctr = whiten(sigma_C, 0.7)
 sigma_Dtr = whiten(sigma_D, 0.7)
 sigma_Etr = whiten(sigma_E, 0.7)
 
-C = nearestSPD(sigma_Ctr);
-R_C = chol(C);
+eig(sigma_Etr)
+
+R_C = chol(sigma_Ctr);
 z_C = repmat(mu_C,N_C,1) + randn(N_C,2)*R_C
 
-D = nearestSPD(sigma_Dtr);
 R_D = chol(sigma_Dtr);
 z_D = repmat(mu_D,N_D,1) + randn(N_D,2)*R_D
 
-E = nearestSPD(sigma_Etr);
 R_E = chol(sigma_Etr);
 z_E = repmat(mu_E,N_E,1) + randn(N_E,2)*R_E
 
