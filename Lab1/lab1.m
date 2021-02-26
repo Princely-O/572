@@ -31,10 +31,10 @@ sigma_E= [10 -5; -5 20];
 sigma_Atr = whiten(sigma_A, 0.7)
 sigma_Btr = whiten(sigma_B, 0.7)
 
-R_A = chol(sigma_Atr);
+R_A = chol(sigma_A);
 z_A = repmat(mu_A,N_A,1) + randn(N_A,2)*R_A
 
-R_B = chol(sigma_Btr);
+R_B = chol(sigma_B);
 z_B = repmat(mu_B,N_B,1) + randn(N_B,2)*R_B
 
 % classifiers
@@ -159,11 +159,11 @@ sigma_Ctr = whiten(sigma_C, 0.7)
 sigma_Dtr = whiten(sigma_D, 0.7)
 sigma_Etr = whiten(sigma_E, 0.7)
 
-R_C = chol(sigma_Ctr, 'lower');
+R_C = chol(sigma_C);
 z_C = repmat(mu_C,N_C,1) + randn(N_C,2)*R_C
-R_D = chol(nearestSPD(sigma_Dtr));
+R_D = chol(sigma_D);
 z_D = repmat(mu_D,N_D,1) + randn(N_D,2)*R_D
-R_E = chol(sigma_Etr, 'lower');
+R_E = chol(sigma_E);
 z_E = repmat(mu_E,N_E,1) + randn(N_E,2)*R_E
 
 % classifiers
@@ -178,43 +178,43 @@ title('Case 2 MED GED MAP')
 hold on
 scatter(z_D(:,1),z_D(:,2),'x')
 hold on
-scatter(z_E(:,1),z_E(:,2),'x')
+scatter(z_E(:,1),z_E(:,2),'x', 'g')
 scatter(prototype_C(:,1),prototype_C(:,2),'d', 'filled');
 scatter(prototype_D(:,1),prototype_D(:,2),'s', 'filled');
 scatter(prototype_E(:,1),prototype_E(:,2),'s', 'filled');
 % unit standard deviation contours
 % class C
-% t = linspace(0,2 * pi,1000);
-% theta0 = atan2(-4,-4);
-% a=sqrt(4);
-% b=sqrt(8);
-% x = 5 + a * sin(t+theta0);
-% y = 10 + b * cos(t);
-% plot(x,y, 'b')
+t = linspace(0,2 * pi,1000);
+theta0 = atan2(-16-4*sqrt(17),-16-4*sqrt(17));
+a=sqrt((48-sqrt(1088))/2);
+b=sqrt((48+sqrt(1088))/2);
+x = 5 + a * sin(t+theta0);
+y = 10 + b * cos(t);
+plot(x,y, 'b')
 % 
 % % class D
-% t = linspace(0,2 * pi,1000);
-% theta0 = atan2(-4,-4);
-% a=sqrt(4);
-% b=sqrt(8);
-% x = 10 + a * sin(t+theta0);
-% y = 15 + b * cos(t);
-% plot(x,y, 'r')
-% axis equal
-% 
-% % class E
-% t = linspace(0,2 * pi,1000);
-% theta0 = atan2(-4,-4);
-% a=sqrt(4);
-% b=sqrt(8);
-% x = 5 + a * sin(t+theta0);
-% y = 10 + b * cos(t);
-% plot(x,y, 'b')
+t = linspace(0,2 * pi,1000);
+theta0 = atan2(0,0);
+a=sqrt(8);
+b=sqrt(8);
+x = 15 + a * sin(t+theta0);
+y = 10 + b * cos(t);
+plot(x,y, 'r')
+axis equal
 
-x_1 = 0 : 20;
+% % class E
+t = linspace(0,2 * pi,1000);
+theta0 = atan2(-5-5*sqrt(2),-5-5*sqrt(2));
+a=sqrt((30-sqrt(200))/2);
+b=sqrt((30+sqrt(200))/2);
+x = 10 + a * sin(t+theta0);
+y = 5 + b * cos(t);
+plot(x,y, 'g')
+
+y_1 = 0 : 20;
 m_1 = 0;
 b_1 = 10;
-y_1 = m_1*x_1 + b_1;
+x_1 = m_1*y_1 + b_1;
 
 x_2 = 0 : 20;
 m_2 = -1;
@@ -222,12 +222,15 @@ b_2 = 20;
 y_2 = m_2*x_2 + b_2;
 
 x_3 = 0 : 20;
-m_3 = -1;
+m_3 = 1;
 b_3 = 0;
 y_3 = m_3*x_3 + b_3;
 plot(x_1,y_1, 'm')
 plot(x_2,y_2, 'm')
 plot(x_3,y_3, 'm')
+xlabel 'x1'; 
+ylabel 'x2';
+legend('Class C','Class D', 'Class E', 'Class C prototype','Class D prototype', 'Class E prototype', 'Class C contour', 'Class D contour', 'Class E contour', 'MED boundaries');
 
 
 % end of Case 2-----------------------------------------------------------
